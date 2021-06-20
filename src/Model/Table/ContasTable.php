@@ -9,27 +9,27 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * TipoLancamentos Model
+ * Contas Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \App\Model\Entity\TipoLancamento newEmptyEntity()
- * @method \App\Model\Entity\TipoLancamento newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\TipoLancamento[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TipoLancamento get($primaryKey, $options = [])
- * @method \App\Model\Entity\TipoLancamento findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\TipoLancamento patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\TipoLancamento[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\TipoLancamento|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TipoLancamento saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\TipoLancamento[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\TipoLancamento[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\TipoLancamento[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\TipoLancamento[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Conta newEmptyEntity()
+ * @method \App\Model\Entity\Conta newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Conta[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Conta get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Conta findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Conta patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Conta[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Conta|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Conta saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Conta[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Conta[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Conta[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Conta[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class TipoLancamentosTable extends Table
+class ContasTable extends Table
 {
     /**
      * Initialize method
@@ -41,7 +41,7 @@ class TipoLancamentosTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('tipo_lancamentos');
+        $this->setTable('contas');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -62,7 +62,7 @@ class TipoLancamentosTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
+            ->nonNegativeInteger('id')
             ->allowEmptyString('id', null, 'create');
 
         $validator
@@ -70,6 +70,9 @@ class TipoLancamentosTable extends Table
             ->maxLength('nome', 50)
             ->requirePresence('nome', 'create')
             ->notEmptyString('nome');
+
+        $validator
+            ->allowEmptyString('desativado');
 
         return $validator;
     }

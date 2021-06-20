@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -7,17 +6,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * TipoLancamento Entity
+ * Conta Entity
  *
  * @property int $id
  * @property string $nome
+ * @property int|null $desativado
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property int $user_id
  *
  * @property \App\Model\Entity\User $user
  */
-class TipoLancamento extends Entity
+class Conta extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,10 +29,11 @@ class TipoLancamento extends Entity
      * @var array
      */
     protected $_accessible = [
-        'nome'     => true,
-        'created'  => true,
+        'nome' => true,
+        'desativado' => true,
+        'created' => true,
         'modified' => true,
-        'user_id'  => true,
-        'user'     => true,
+        'user_id' => true,
+        'user' => true,
     ];
 }

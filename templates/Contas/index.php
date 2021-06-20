@@ -2,11 +2,11 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\TipoLancamento[]|\Cake\Collection\CollectionInterface $tipoLancamentos
+ * @var \App\Model\Entity\Conta[]|\Cake\Collection\CollectionInterface $contas
  */
 ?>
 
-<?php $this->assign('title', __('Tipo Lancamentos')); ?>
+<?php $this->assign('title', __('Contas')); ?>
 
 <?php
 $this->assign(
@@ -14,7 +14,7 @@ $this->assign(
   $this->element('content/breadcrumb', [
     'home' => true,
     'breadcrumb' => [
-      'List Tipo Lancamentos',
+      'List Contas',
     ]
   ])
 );
@@ -30,7 +30,7 @@ $this->assign(
         'label' => false,
         'class' => 'form-control-sm',
       ]); ?>
-      <?= $this->Html->link(__('New Tipo Lancamento'), ['action' => 'add'], ['class' => 'btn btn-primary btn-sm']) ?>
+      <?= $this->Html->link(__('New Conta'), ['action' => 'add'], ['class' => 'btn btn-primary btn-sm']) ?>
     </div>
   </div>
   <!-- /.card-header -->
@@ -40,22 +40,24 @@ $this->assign(
         <tr>
           <th><?= $this->Paginator->sort('id') ?></th>
           <th><?= $this->Paginator->sort('nome') ?></th>
+          <th><?= $this->Paginator->sort('desativado') ?></th>
           <th><?= $this->Paginator->sort('created') ?></th>
           <th><?= $this->Paginator->sort('modified') ?></th>
           <th class="actions"><?= __('Actions') ?></th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($tipoLancamentos as $tipoLancamento) : ?>
+        <?php foreach ($contas as $conta) : ?>
           <tr>
-            <td><?= $this->Number->format($tipoLancamento->id) ?></td>
-            <td><?= h($tipoLancamento->nome) ?></td>
-            <td><?= h($tipoLancamento->created) ?></td>
-            <td><?= h($tipoLancamento->modified) ?></td>
+            <td><?= $this->Number->format($conta->id) ?></td>
+            <td><?= h($conta->nome) ?></td>
+            <td><?= $this->Number->format($conta->desativado) ?></td>
+            <td><?= h($conta->created) ?></td>
+            <td><?= h($conta->modified) ?></td>
             <td class="actions">
-              <?= $this->Html->link(__('View'), ['action' => 'view', $tipoLancamento->id], ['class' => 'btn btn-xs btn-outline-primary', 'escape' => false]) ?>
-              <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tipoLancamento->id], ['class' => 'btn btn-xs btn-outline-success', 'escape' => false]) ?>
-              <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tipoLancamento->id], ['class' => 'btn btn-xs btn-outline-danger', 'escape' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $tipoLancamento->id)]) ?>
+              <?= $this->Html->link(__('View'), ['action' => 'view', $conta->id], ['class' => 'btn btn-xs btn-outline-primary', 'escape' => false]) ?>
+              <?= $this->Html->link(__('Edit'), ['action' => 'edit', $conta->id], ['class' => 'btn btn-xs btn-outline-success', 'escape' => false]) ?>
+              <?= $this->Form->postLink(__('Desativar'), ['action' => 'delete', $conta->id], ['class' => 'btn btn-xs btn-outline-danger', 'escape' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $conta->id)]) ?>
             </td>
           </tr>
         <?php endforeach; ?>

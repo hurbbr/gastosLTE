@@ -2,11 +2,11 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\TipoLancamento $tipoLancamento
+ * @var \App\Model\Entity\Conta $conta
  */
 ?>
 
-<?php $this->assign('title', __('Edit Tipo Lancamento')); ?>
+<?php $this->assign('title', __('Edit Conta')); ?>
 
 <?php
 $this->assign(
@@ -14,8 +14,8 @@ $this->assign(
   $this->element('content/breadcrumb', [
     'home' => true,
     'breadcrumb' => [
-      'List Tipo Lancamentos' => ['action' => 'index'],
-      'View' => ['action' => 'view', $tipoLancamento->id],
+      'List Contas' => ['action' => 'index'],
+      'View' => ['action' => 'view', $conta->id],
       'Edit',
     ]
   ])
@@ -24,10 +24,10 @@ $this->assign(
 
 
 <div class="card card-primary card-outline">
-  <?= $this->Form->create($tipoLancamento) ?>
+  <?= $this->Form->create($conta) ?>
   <div class="card-body">
     <?php
-    echo $this->Form->hidden('user_id', ['value' => $tipoLancamento->user_id]);
+    echo $this->Form->hidden('user_id', ['value' => $usuarioLogado->id]);
     echo $this->Form->control('nome');
     ?>
   </div>
@@ -35,9 +35,9 @@ $this->assign(
   <div class="card-footer d-flex">
     <div class="">
       <?= $this->Form->postLink(
-        __('Delete'),
-        ['action' => 'delete', $tipoLancamento->id],
-        ['confirm' => __('Are you sure you want to delete # {0}?', $tipoLancamento->id), 'class' => 'btn btn-danger']
+        __('Desativar'),
+        ['action' => 'delete', $conta->id],
+        ['confirm' => __('Are you sure you want to delete # {0}?', $conta->id), 'class' => 'btn btn-danger']
       ) ?>
     </div>
     <div class="ml-auto">

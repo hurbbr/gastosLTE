@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
@@ -67,8 +68,7 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
         if (isset($this->Authentication) && $this->Authentication->getIdentity()) {
-            $usuarioLogado = $this->Authentication->getIdentity()->getOriginalData();
-            unset($usuarioLogado['password']);
+            $usuarioLogado = $this->getUser();
             $this->Authorization->skipAuthorization();
 
             $this->set(compact(['usuarioLogado']));
@@ -80,5 +80,13 @@ class AppController extends Controller
         // actions public, skipping the authentication check
         // $this->Authentication->addUnauthenticatedActions(['index', 'view']);
         // dd($this->Authentication->getResult());
+    }
+
+    public function getUser(): User
+    {
+        $user = $this->Authentication->getIdentity()->getOriginalData();
+        unset($user['password']);
+
+        return $user;
     }
 }

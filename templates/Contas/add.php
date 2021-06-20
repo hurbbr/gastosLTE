@@ -2,11 +2,11 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\TipoLancamento $tipoLancamento
+ * @var \App\Model\Entity\Conta $conta
  */
 ?>
 
-<?php $this->assign('title', __('Add Tipo Lancamento')); ?>
+<?php $this->assign('title', __('Add Conta')); ?>
 
 <?php
 $this->assign(
@@ -14,20 +14,19 @@ $this->assign(
   $this->element('content/breadcrumb', [
     'home' => true,
     'breadcrumb' => [
-      'List Tipo Lancamentos' => ['action' => 'index'],
+      'List Contas' => ['action' => 'index'],
       'Add',
     ]
   ])
 );
 ?>
 
-
 <div class="card card-primary card-outline">
-  <?= $this->Form->create($tipoLancamento) ?>
+  <?= $this->Form->create($conta) ?>
   <div class="card-body">
     <?php
-    echo $this->Form->control('nome');
     echo $this->Form->hidden('user_id', ['value' => $usuarioLogado->id]);
+    echo $this->Form->control('nome');
     ?>
   </div>
 

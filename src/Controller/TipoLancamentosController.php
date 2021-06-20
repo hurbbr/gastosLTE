@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -21,7 +22,8 @@ class TipoLancamentosController extends AppController
         $this->paginate = [
             'contain' => ['Users'],
         ];
-        $tipoLancamentos = $this->paginate($this->TipoLancamentos);
+
+        $tipoLancamentos = $this->paginate($this->TipoLancamentos->find()->where(['user_id' => $this->getUser()->id]));
 
         $this->set(compact('tipoLancamentos'));
     }
@@ -51,7 +53,9 @@ class TipoLancamentosController extends AppController
     {
         $tipoLancamento = $this->TipoLancamentos->newEmptyEntity();
         if ($this->request->is('post')) {
-            $tipoLancamento = $this->TipoLancamentos->patchEntity($tipoLancamento, $this->request->getData());
+            $post = $this->request->getData();
+            $post['user_id'] = $this->getUser()->id;
+            $tipoLancamento = $this->TipoLancamentos->patchEntity($tipoLancamento, $post);
             if ($this->TipoLancamentos->save($tipoLancamento)) {
                 $this->Flash->success(__('The tipo lancamento has been saved.'));
 
@@ -59,8 +63,8 @@ class TipoLancamentosController extends AppController
             }
             $this->Flash->error(__('The tipo lancamento could not be saved. Please, try again.'));
         }
-        $users = $this->TipoLancamentos->Users->find('list', ['limit' => 200]);
-        $this->set(compact('tipoLancamento', 'users'));
+
+        $this->set(compact('tipoLancamento'));
     }
 
     /**
