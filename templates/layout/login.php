@@ -23,9 +23,11 @@
   <?= $this->Html->css('CakeLte.style') ?>
 
   <?= $this->fetch('css') ?>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page dark-mode">
   <div class="login-box">
 
     <div class="login-logo">

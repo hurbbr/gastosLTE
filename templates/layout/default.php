@@ -29,13 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <?= $this->element('layout/css') ?>
 
   <?= $this->fetch('css') ?>
-  <style>
-    .dark-mode {
-      background-color: #454d55 !important;
-      color: #fff;
-    }
-  </style>
-
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">

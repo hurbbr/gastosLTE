@@ -21,6 +21,7 @@ namespace App\Controller;
 use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 
 /**
  * Application Controller
@@ -88,5 +89,24 @@ class AppController extends Controller
         unset($user['password']);
 
         return $user;
+    }
+
+    public function trataValor($valor): float
+    {
+
+        $valor = str_replace('R$', '', $valor);
+        $valor = str_replace('.', '', $valor);
+        $valor = str_replace(',', '.', $valor);
+        $valor = trim($valor);
+
+        return floatval($valor);
+    }
+
+    public function trataData($data): FrozenDate
+    {
+        $data = explode('/', $data);
+        $data = "{$data[2]}/{$data[1]}/{$data[0]}";
+
+        return new FrozenDate($data);
     }
 }

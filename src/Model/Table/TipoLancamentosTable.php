@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -42,7 +43,7 @@ class TipoLancamentosTable extends Table
         parent::initialize($config);
 
         $this->setTable('tipo_lancamentos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
