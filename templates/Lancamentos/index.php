@@ -26,7 +26,7 @@ $this->assign(
       <!-- -->
     </h2>
     <div class="card-toolbox">
-      <?= $this->Html->link(__('Novo'), ['action' => 'add'], ['class' => 'btn btn-primary btn-sm']) ?>
+      <?= $this->Html->link(__('Novo'), ['action' => 'add', '?' => $this->getRequest()->getQueryParams()], ['class' => 'btn btn-primary btn-sm']) ?>
     </div>
   </div>
   <!-- /.card-header -->
@@ -34,84 +34,88 @@ $this->assign(
     <div class="row">
       <div class="col-md-12">
         <ul class="pagination pagination-month justify-content-center">
-          <li class="page-item pagination-prev"><a class="page-link" href="#">«</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item pagination-prev">
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => $mesAnterior, 'ano' => '2021']]) ?>"><i class="fas fa-chevron-left"></i></a>
+          </li>
+          <li class="page-item" data-mes='01'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '01', 'ano' => '2021']]) ?>">
               <p class="page-month">Jan</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='02'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '02', 'ano' => '2021']]) ?>">
               <p class="page-month">Feb</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='03'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '03', 'ano' => '2021']]) ?>">
               <p class="page-month">Mar</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='04'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '04', 'ano' => '2021']]) ?>">
               <p class="page-month">Apr</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='05'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '05', 'ano' => '2021']]) ?>">
               <p class="page-month">May</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item active">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='06'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '06', 'ano' => '2021']]) ?>">
               <p class="page-month">Jun</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='07'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '07', 'ano' => '2021']]) ?>">
               <p class="page-month">Jul</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='08'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '08', 'ano' => '2021']]) ?>">
               <p class="page-month">Aug</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='09'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '09', 'ano' => '2021']]) ?>">
               <p class="page-month">Sep</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='10'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '10', 'ano' => '2021']]) ?>">
               <p class="page-month">Oct</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='11'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '11', 'ano' => '2021']]) ?>">
               <p class="page-month">Nov</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item" data-mes='12'>
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => '12', 'ano' => '2021']]) ?>">
               <p class="page-month">Dec</p>
               <p class="page-year">2021</p>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">»</a></li>
+          <li class="page-item pagination-next">
+            <a class="page-link" href="<?= $this->Url->build(['action' => 'index', '?' => ['mes' => $proximoMes, 'ano' => '2021']]) ?>"><i class="fas fa-chevron-right"></i></a>
+          </li>
         </ul>
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top:15px;">
       <div class="col-md-2"></div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="info-box bg-danger">
@@ -153,55 +157,73 @@ $this->assign(
     </div>
     <!-- TIMELINE -->
     <div class="row">
-      <div class="col-sm-12">
-        <div class="timeline">
-          <?php foreach ($lancamentosArray as $data => $lancamentos) : ?>
-            <!-- timeline time label -->
-            <div class="time-label">
-              <span class="bg-warning"><?= $data ?></span>
+      <?php if (empty($lancamentosArray)) : ?>
+        <div class="col-md-3 col-sm-6 col-12"></div>
+        <div class="col-md-6 col-sm-6 col-12">
+          <div class="card bg-gradient-success">
+            <div class="card-header">
+              <h3 class="card-title">Opps!</h3>
+              <!-- /.card-tools -->
             </div>
-            <!-- /.timeline-label -->
-            <!-- timeline item -->
-            <?php foreach ($lancamentos as $lancamento) : ?>
-              <div>
-                <i class="fas <?= $lancamento::CLASS_ICONS[$lancamento->natureza] ?>"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fas fa-clock"></i> <?= $lancamento->created->format('d/m/Y h:m:s') ?></span>
-                  <h3 class="timeline-header">
-                    <?= $lancamento->has('tipo_lancamento') ? h($lancamento->tipo_lancamento->nome) : 'N/D' ?>
-                    <small> <?= h($lancamento->natureza) ?> </small>
-                  </h3>
-                  <div class="timeline-body">
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <small class="align-top"> <?= h('Descrição:') ?></small>
-                        <?= h($lancamento->descricao) ?>
-                      </div>
-                      <div class="col-sm-4">
-                        <small class="align-top"> <?= h('Conta:') ?></small>
-                        <?= h($lancamento->has('conta') ? $lancamento->conta->nome : 'N/D') ?>
-                      </div>
-                      <div class="col-sm-4">
-                        <small class="align-top"> <?= h('Valor:') ?></small>
-                        <?= $this->Number->currency($lancamento->valor, 'BRL') ?>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="timeline-footer">
-                    <?= $this->Html->link(__('Visualizar'), ['action' => 'view', $lancamento->id], ['class' => 'btn btn-sm btn-primary', 'escape' => false]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $lancamento->id], ['class' => 'btn btn-sm btn-success', 'escape' => false]) ?>
-                    <?= $this->Form->postLink(__('Apagar'), ['action' => 'delete', $lancamento->id], ['class' => 'btn btn-sm btn-danger', 'escape' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $lancamento->id)]) ?>
-                  </div>
-                </div>
-              </div>
-            <?php endforeach; ?>
-            <!-- END timeline item -->
-          <?php endforeach; ?>
-          <div>
-            <i class="fas fa-clock bg-gray"></i>
+            <!-- /.card-header -->
+            <div class="card-body">
+              Você ainda não registrou nada nesse mês!
+            </div>
+            <!-- /.card-body -->
           </div>
         </div>
-      </div>
+        <div class="col-md-3 col-sm-6 col-12"></div>
+      <?php else : ?>
+        <div class="col-sm-12">
+          <div class="timeline">
+            <?php foreach ($lancamentosArray as $data => $lancamentos) : ?>
+              <!-- timeline time label -->
+              <div class="time-label">
+                <span class="bg-warning"><?= $data ?></span>
+              </div>
+              <!-- /.timeline-label -->
+              <!-- timeline item -->
+              <?php foreach ($lancamentos as $lancamento) : ?>
+                <div>
+                  <i class="fas <?= $lancamento::CLASS_ICONS[$lancamento->natureza] ?>"></i>
+                  <div class="timeline-item">
+                    <span class="time"><i class="fas fa-clock"></i> <?= $lancamento->created->format('d/m/Y h:m:s') ?></span>
+                    <h3 class="timeline-header">
+                      <?= $lancamento->has('tipo_lancamento') ? h($lancamento->tipo_lancamento->nome) : 'N/D' ?>
+                      <small> <?= h($lancamento->natureza) ?> </small>
+                    </h3>
+                    <div class="timeline-body">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <small class="align-top"> <?= h('Descrição:') ?></small>
+                          <?= h($lancamento->descricao) ?>
+                        </div>
+                        <div class="col-sm-4">
+                          <small class="align-top"> <?= h('Conta:') ?></small>
+                          <?= h($lancamento->has('conta') ? $lancamento->conta->nome : 'N/D') ?>
+                        </div>
+                        <div class="col-sm-4">
+                          <small class="align-top"> <?= h('Valor:') ?></small>
+                          <?= $this->Number->currency($lancamento->valor, 'BRL') ?>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="timeline-footer">
+                      <?= $this->Html->link(__('Visualizar'), ['action' => 'view', $lancamento->id], ['class' => 'btn btn-sm btn-primary', 'escape' => false]) ?>
+                      <?= $this->Html->link(__('Editar'), ['action' => 'edit', $lancamento->id], ['class' => 'btn btn-sm btn-success', 'escape' => false]) ?>
+                      <?= $this->Form->postLink(__('Apagar'), ['action' => 'delete', $lancamento->id], ['class' => 'btn btn-sm btn-danger', 'escape' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $lancamento->id)]) ?>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+              <!-- END timeline item -->
+            <?php endforeach; ?>
+            <div>
+              <i class="fas fa-clock bg-gray"></i>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
   <!-- /.card-body -->
@@ -210,169 +232,26 @@ $this->assign(
   <!-- /.card-footer -->
 </div>
 
-<?php $this->start('script'); ?>
+<?php
+$this->start('script');
+echo $this->Html->script('rpage');
+?>
 
 <script>
-  /*
-   * A plugin for making Bootstrap's pagination more responsive
-   * https://github.com/auxiliary/rpage
-   */
-
-  (function($) {
-    jQuery.fn.rPage = function() {
-      var $this = $(this);
-      for (var i = 0, max = $this.length; i < max; i++) {
-        new rPage($($this[i]));
-      }
-
-      function rPage($container) {
-        this.label = function() {
-          var active_index = this.els.filter(".active").index();
-          var rp = this;
-          this.els.each(function() {
-            if (rp.isNextOrPrevLink($(this)) == false) {
-              $(this).addClass("page-away-" + (Math.abs(active_index - $(this).index())).toString());
-            } else {
-              if ($(this).index() > active_index) {
-                $(this).addClass("right-etc");
-              } else {
-                $(this).addClass("left-etc");
-              }
-            }
-          });
-        }
-
-        this.makeResponsive = function() {
-          this.reset();
-          var width = this.calculateWidth();
-
-          while (width > this.els.parent().parent().width() - 10) {
-            var did_remove = this.removeOne();
-            if (did_remove == false) {
-              break;
-            }
-            width = this.calculateWidth();
-          }
-        }
-
-        this.isNextOrPrevLink = function(element) {
-          return (
-            element.hasClass('pagination-prev') ||
-            element.hasClass('pagination-next') ||
-            element.text() == "»" ||
-            element.text() == "«"
-          );
-        }
-
-        this.isRemovable = function(element) {
-          if (this.isNextOrPrevLink(element)) {
-            return false;
-          }
-          var index = this.els.filter(element).index();
-          if (index == 1 || this.isNextOrPrevLink($container.find("li").eq(index + 1))) {
-            return false;
-          }
-          if (element.text() == "...") {
-            return false;
-          }
-          return true;
-        }
-
-        this.removeOne = function() {
-          var active_index = this.els.filter(".active").index();
-          var farthest_index = $container.find("li").length - 1;
-          var next = active_index + 1;
-          var prev = active_index - 1;
-
-          for (var i = farthest_index - 1; i > 0; i--) {
-            var candidates = this.els.filter(".page-away-" + i.toString());
-            var candidate = candidates.filter(function() {
-              return this.style["display"] != "none";
-            });
-            if (candidate.length > 0) {
-              for (var j = 0; j < candidate.length; j++) {
-                var candid_candidate = candidate.eq(j);
-                if (this.isRemovable(candid_candidate)) {
-                  candid_candidate.css("display", "none");
-                  if (this.needsEtcSign(active_index, farthest_index - 1)) {
-                    this.els.eq(farthest_index - 2).before("<li class='disabled removable'><span>...</span></li>");
-                  }
-                  if (this.needsEtcSign(1, active_index)) {
-                    this.els.eq(1).after("<li class='disabled removable'><span>...</span></li>");
-                  }
-                  return true;
-                }
-              }
-            }
-          }
-          return false;
-        }
-
-        this.needsEtcSign = function(el1_index, el2_index) {
-          if (el2_index - el1_index <= 1) {
-            return false;
-          } else {
-            var hasEtcSign = false;
-            var hasHiddenElement = false;
-            for (var i = el1_index + 1; i < el2_index; i++) {
-              var el = $container.find("li").eq(i);
-              if (el.css("display") == "none") {
-                hasHiddenElement = true;
-              }
-              if (el.text() == "...") {
-                hasEtcSign = true;
-              }
-            }
-            if (hasHiddenElement == true && hasEtcSign == false) {
-              return true;
-            }
-          }
-          return false;
-        }
-
-        this.reset = function() {
-          for (var i = 0; i < this.els.length; i++) {
-            this.els.eq(i).css("display", "inline");
-          }
-          $container.find("li").filter(".removable").remove();
-        }
-
-        this.calculateWidth = function() {
-          var width = 0;
-          for (var i = 0; i < $container.find("li").length; i++) {
-            if (!($container.find("li").eq(i).css('display') == 'none')) {
-              if ($container.find("li").eq(i).children("a").eq(0).length > 0) {
-                width += $container.find("li").eq(i).children("a").eq(0).outerWidth();
-              }
-              if ($container.find("li").eq(i).children("span").eq(0).length > 0) {
-                width += $container.find("li").eq(i).children("span").eq(0).outerWidth();
-              }
-            }
-          }
-          return width;
-        }
-
-        this.els = $container.find("li");
-        this.label();
-        this.makeResponsive();
-
-        var resize_timer;
-
-        $(window).resize(
-          $.proxy(function() {
-            clearTimeout(resize_timer);
-            resize_timer = setTimeout($.proxy(function() {
-              this.makeResponsive()
-            }, this), 100);
-          }, this)
-        );
-      }
-    };
-  }(jQuery));
-</script>
-<script>
+  const mes = "<?= $this->getRequest()->getQuery('mes') ?? date('m') ?>";
   $(document).ready(function() {
-    $(".pagination").rPage();
+    $('.pagination-month').children('li').each(function(index, element) {
+      if ($(element).data('mes') == mes) {
+        $(element).addClass('active');
+      }
+    });
+    setTimeout(function() {
+      $(".pagination").rPage();
+    }, 500);
+
+    setTimeout(function() {
+      $('.alert').remove();
+    }, 2000);
   });
 </script>
 <?php $this->end() ?>

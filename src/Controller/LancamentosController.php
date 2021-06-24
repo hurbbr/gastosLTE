@@ -22,27 +22,75 @@ class LancamentosController extends AppController
      */
     public function index()
     {
-        $hoje = new FrozenDate();
+        $usuarioLogado = $this->getUser();
 
-        $LancamentosQuery = $this->Lancamentos->find()
-            ->where([
-                'Lancamentos.user_id' => $this->getUser()->id,
-                'data BETWEEN :start AND :end'
-            ])
-            ->bind(':start', $hoje->startOfMonth(), 'date')
-            ->bind(':end',   $hoje->endOfMonth(), 'date')
-            ->contain([
-                'Contas' => [
-                    'fields' => ['nome']
-                ],
-                'TipoLancamentos' => [
-                    'fields' => ['nome']
-                ],
-            ])
-            ->orderAsc('Lancamentos.data');
+        $contas = $this->Lancamentos->Contas->find()->where(['user_id' => $usuarioLogado->id])->count();
+        $tipoLancamentos = $this->Lancamentos->TipoLancamentos->find()->where(['user_id' => $usuarioLogado->id])->count();
 
-        $this->criaTimeLine($LancamentosQuery);
-        $this->carregaBalancoGeral();
+        if ($contas == 0 || $tipoLancamentos == 0) {
+            $this->viewBuilder()->setTemplate('erro');
+        } else {
+            $filtros = $this->preparaFiltros();
+            $LancamentosQuery = $this->Lancamentos->find()
+                ->where([
+                    'Lancamentos.user_id' => $usuarioLogado->id,
+                    'data BETWEEN :start AND :end'
+                ])
+                ->bind(':start', $filtros['data_inicio'], 'date')
+                ->bind(':end',   $filtros['data_fim'], 'date')
+                ->contain([
+                    'Contas' => [
+                        'fields' => ['nome']
+                    ],
+                    'TipoLancamentos' => [
+                        'fields' => ['nome']
+                    ],
+                ])
+                ->orderAsc('Lancamentos.data');
+
+            $this->criaTimeLine($LancamentosQuery);
+            $this->carregaBalancoGeral();
+        }
+    }
+
+    private function preparaFiltros()
+    {
+        $query = $this->getRequest()->getQueryParams();
+        if (!empty($query['mes']) && !empty($query['ano'])) {
+            $data = new FrozenDate("{$query['ano']}-{$query['mes']}-01");
+            $filtros = [
+                'data_inicio' => $data->startOfMonth(),
+                'data_fim' => $data->endOfMonth()
+            ];
+            $proximoMes = $query['mes'];
+            if ($query['mes'] != 12) {
+                $proximoMes = $query['mes'] + 1;
+            }
+            $mesAnterior = $query['mes'];
+            if ($query['mes'] != 1) {
+                $mesAnterior = $query['mes'] - 1;
+            }
+        } else {
+            $data = new FrozenDate();
+            $filtros = [
+                'data_inicio' => $data->startOfMonth(),
+                'data_fim' => $data->endOfMonth()
+            ];
+
+            $proximoMes = $data->format('m');
+            if ($proximoMes != 12) {
+                $proximoMes = $proximoMes + 1;
+            }
+            $mesAnterior = $data->format('m');
+            if ($mesAnterior != 1) {
+                $mesAnterior = $mesAnterior - 1;
+            }
+        }
+        $mesAnterior = sprintf('%02u', $mesAnterior);
+        $proximoMes = sprintf('%02u', $proximoMes);
+
+        $this->set(compact('mesAnterior', 'proximoMes'));
+        return $filtros;
     }
 
     /**
@@ -68,38 +116,46 @@ class LancamentosController extends AppController
      */
     public function add()
     {
-        $lancamento = $this->Lancamentos->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $post = $this->request->getData();
-            $post['valor'] = $this->trataValor($post['valor']);
-            $post['data'] = $this->trataData($post['data']);
+        $usuarioLogado = $this->getUser();
+        $contas = $this->Lancamentos->Contas->find()->where(['user_id' => $usuarioLogado->id])->count();
+        $tipoLancamentos = $this->Lancamentos->TipoLancamentos->find()->where(['user_id' => $usuarioLogado->id])->count();
 
-            if (!empty($post['data_pagamento'])) {
-                $post['data_pagamento'] = $this->trataData($post['data_pagamento']);
+        if ($contas == 0 || $tipoLancamentos == 0) {
+            $this->viewBuilder()->setTemplate('erro');
+        } else {
+            $lancamento = $this->Lancamentos->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $post = $this->request->getData();
+                $post['valor'] = $this->trataValor($post['valor']);
+                $post['data'] = $this->trataData($post['data']);
+
+                if (!empty($post['data_pagamento'])) {
+                    $post['data_pagamento'] = $this->trataData($post['data_pagamento']);
+                }
+                $post['user_id'] = $this->getUser()->id;
+                $lancamento = $this->Lancamentos->patchEntity($lancamento, $post);
+
+                if ($this->Lancamentos->save($lancamento)) {
+                    $this->Flash->success(__('The lancamento has been saved.'));
+
+                    return $this->redirect(['action' => 'index', '?' => $this->getRequest()->getQueryParams()]);
+                }
+                $this->Flash->error(__('The lancamento could not be saved. Please, try again.'));
             }
-            $post['user_id'] = $this->getUser()->id;
-            $lancamento = $this->Lancamentos->patchEntity($lancamento, $post);
 
-            if ($this->Lancamentos->save($lancamento)) {
-                $this->Flash->success(__('The lancamento has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The lancamento could not be saved. Please, try again.'));
+            $contas = $this->Lancamentos->Contas->find('list', [
+                'conditions' => [
+                    'Contas.user_id' => $usuarioLogado->id
+                ],
+                'limit' => 200
+            ]);
+            $tipoLancamentos = $this->Lancamentos->TipoLancamentos->find('list', [
+                'conditions' => [
+                    'TipoLancamentos.user_id' => $usuarioLogado->id
+                ], 'limit' => 200
+            ]);
+            $this->set(compact('lancamento', 'contas', 'tipoLancamentos'));
         }
-        $usuario = $this->getUser();
-        $contas = $this->Lancamentos->Contas->find('list', [
-            'conditions' => [
-                'Contas.user_id' => $usuario->id
-            ],
-            'limit' => 200
-        ]);
-        $tipoLancamentos = $this->Lancamentos->TipoLancamentos->find('list', [
-            'conditions' => [
-                'TipoLancamentos.user_id' => $usuario->id
-            ], 'limit' => 200
-        ]);
-        $this->set(compact('lancamento', 'contas', 'tipoLancamentos'));
     }
 
     /**
@@ -171,12 +227,15 @@ class LancamentosController extends AppController
         $lancamentosArray = [];
         (float) $entrada = 0;
         (float) $saida = 0;
-        foreach ($LancamentosQuery as $lancamento) {
+        foreach ($LancamentosQuery ?? [] as $lancamento) {
             ${Lancamento::NATUREZA_VARIAVEL[$lancamento->natureza]} += $lancamento->valor;
             $lancamentosArray[$lancamento->data->format('d/m/Y')][] = $lancamento;
         }
 
-        $porcentagem = intval(($saida * 100) / $entrada);
+        $porcentagem = 0;
+        if (!empty($entrada)) {
+            $porcentagem = intval(($saida * 100) / $entrada);
+        }
 
         $this->set(compact('entrada', 'saida', 'lancamentosArray', 'porcentagem'));
     }
