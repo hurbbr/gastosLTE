@@ -20,6 +20,19 @@ class UsersController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+
+        try {
+            $usuarioLogado = $this->Authentication->getIdentity()->getOriginalData();
+        } catch (\Throwable $th) {
+            $usuarioLogado = null;
+        }
+
+        $action = $this->getRequest()->getParam('action');
+
+        if (!empty($usuarioLogado) && $usuarioLogado->role != 'admin' && $action != 'logout') {
+            return $this->redirect(['controller' => 'Lancamentos', 'action' => 'index']);
+        }
+        // dd($usuarioLogado);
     }
 
     public function login()
@@ -100,7 +113,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }

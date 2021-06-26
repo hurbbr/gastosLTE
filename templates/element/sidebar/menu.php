@@ -53,12 +53,14 @@
   </ul>
 </li>
 
-<li class="nav-item">
-  <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index'], ['escape' => false]) ?>" class="nav-link">
-    <i class="far fa-circle nav-icon"></i>
-    <p>Usuários</p>
-  </a>
-</li>
+<?php if ($usuarioLogado->role === 'admin') : ?>
+  <li class="nav-item">
+    <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index'], ['escape' => false]) ?>" class="nav-link">
+      <i class="far fa-circle nav-icon"></i>
+      <p>Usuários</p>
+    </a>
+  </li>
+<?php endif; ?>
 <li class="nav-item">
   <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout'], ['escape' => false]) ?>" class="nav-link bg-danger">
     <i class="fas fa-sign-out-alt"></i>

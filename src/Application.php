@@ -166,7 +166,7 @@ class Application extends BaseApplication implements
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => Router::url('/users/login'),
+            'unauthenticatedRedirect' => Router::url('/login'),
             'queryParam' => 'redirect',
         ]);
 
