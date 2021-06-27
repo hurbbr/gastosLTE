@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -39,6 +40,7 @@ use Cake\Database\Type\StringType;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
+use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
@@ -76,6 +78,7 @@ use Cake\Utility\Security;
  * idea to create multiple configuration files, and separate the configuration
  * that changes from configuration that does not. This makes deployment simpler.
  */
+
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
@@ -217,3 +220,7 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
+
+
+//Inicialização dos eventos
+EventManager::instance()->on(new \App\Eventos\Lancamento\Application\DomainEventHandler\LancamentoEventos());

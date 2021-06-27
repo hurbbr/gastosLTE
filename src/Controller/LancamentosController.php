@@ -133,6 +133,7 @@ class LancamentosController extends AppController
                     $post['data_pagamento'] = $this->trataData($post['data_pagamento']);
                 }
                 $post['user_id'] = $this->getUser()->id;
+
                 $lancamento = $this->Lancamentos->patchEntity($lancamento, $post);
 
                 if ($this->Lancamentos->save($lancamento)) {

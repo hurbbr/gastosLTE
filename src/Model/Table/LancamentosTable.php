@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Eventos\Comum\InitEvento;
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -15,6 +19,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ContasTable&\Cake\ORM\Association\BelongsTo $Contas
  * @property \App\Model\Table\TipoLancamentosTable&\Cake\ORM\Association\BelongsTo $TipoLancamentos
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\LancamentosTable&\Cake\ORM\Association\HasMany $Lancamentos
  *
  * @method \App\Model\Entity\Lancamento newEmptyEntity()
  * @method \App\Model\Entity\Lancamento newEntity(array $data, array $options = [])
@@ -61,6 +66,11 @@ class LancamentosTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->hasMany('Lancamentos', [
+            'foreignKey' => 'lancamento_id',
+            'joinType' => 'Left',
         ]);
     }
 
@@ -118,5 +128,12 @@ class LancamentosTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
 
         return $rules;
+    }
+
+    public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        if ($entity->isNew()) {
+            $this->getEventManager()->dispatch(new InitEvento('Lancamento', 'NovoLancamento', $this, $entity));
+        }
     }
 }

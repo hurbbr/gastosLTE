@@ -27,8 +27,15 @@ $this->assign(
   <?= $this->Form->hidden('user_id', ['value' => $usuarioLogado->id]); ?>
   <div class="card-body">
     <div class="row">
-      <?= $this->Form->control('tipo_lancamento_id', [
+      <?php echo $this->Form->control('tipo_lancamento_id', [
         'options' => $tipoLancamentos,
+        'templates' => [
+          'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
+          'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
+        ]
+      ]);
+      echo $this->Form->control('conta_id', [
+        'options'   => $contas,
         'templates' => [
           'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
           'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
@@ -46,17 +53,17 @@ $this->assign(
           'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
         ]
       ]);
-      echo $this->Form->control('data_pagamento', [
-        'empty'               => true,
-        'type'                => 'text',
-        'autocomplete'        => 'off',
-        'class'               => 'form-control datepicker',
-        'data-date-clear-btn' => 'true',
-        'templates'           => [
-          'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
-          'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
-        ]
-      ]);
+      // echo $this->Form->control('data_pagamento', [
+      //   'empty'               => true,
+      //   'type'                => 'text',
+      //   'autocomplete'        => 'off',
+      //   'class'               => 'form-control datepicker',
+      //   'data-date-clear-btn' => 'true',
+      //   'templates'           => [
+      //     'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
+      //     'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
+      //   ]
+      // ]);
       ?>
     </div>
     <div class="row">
@@ -76,18 +83,30 @@ $this->assign(
           'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
         ]
       ]);
-      echo $this->Form->control('natureza', [
-        'options'   => $lancamento::NATUREZA_OPTIONS,
+      echo $this->Form->control('forma_lancamento', [
+        'options'   => $lancamento::FORMA_LANCAMENTO_OPTIONS,
+        'default'   => $lancamento::FORMA_LANCAMENTO_PARCELA,
+        'label'     => 'Forma Lançamento',
         'templates' => [
           'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
           'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
         ]
       ]);
-      echo $this->Form->control('conta_id', [
-        'options'   => $contas,
+      echo $this->Form->control('numero_parcelas', [
+        'class'     => 'form-control',
+        'type'      => 'number',
+        'min'       => '1',
+        'default'   => '1',
         'templates' => [
-          'inputContainer'      => '<div class="form-group col-sm-4 {{type}}{{required}}">{{content}}</div>',
-          'inputContainerError' => '<div class="form-group col-sm-4 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
+          'inputContainer'      => '<div class="form-group col-sm-2 {{type}}{{required}}">{{content}}</div>',
+          'inputContainerError' => '<div class="form-group col-sm-2 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
+        ]
+      ]);
+      echo $this->Form->control('natureza', [
+        'options'   => $lancamento::NATUREZA_OPTIONS,
+        'templates' => [
+          'inputContainer'      => '<div class="form-group col-sm-2 {{type}}{{required}}">{{content}}</div>',
+          'inputContainerError' => '<div class="form-group col-sm-2 {{type}}{{required}} has-error">{{content}} {{error}}</div>',
         ]
       ]); ?>
     </div>

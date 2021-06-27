@@ -20,10 +20,15 @@ use Cake\ORM\Entity;
  * @property int $conta_id
  * @property int $tipo_lancamento_id
  * @property int $user_id
+ * @property int $numero_parcelas
+ * @property string $forma_lancamento
+ * @property int $lancamento_id
+ * @property int $parcela
  *
  * @property \App\Model\Entity\Conta $conta
  * @property \App\Model\Entity\TipoLancamento $tipo_lancamento
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\Lancamento $lancamentos
  */
 class Lancamento extends Entity
 {
@@ -45,6 +50,14 @@ class Lancamento extends Entity
         self::NATUREZA_ENTRADA => 'entrada'
     ];
 
+    const FORMA_LANCAMENTO_RECORRENCIA = 'recorrencia';
+    const FORMA_LANCAMENTO_PARCELA = 'parcela';
+
+    const FORMA_LANCAMENTO_OPTIONS = [
+        self::FORMA_LANCAMENTO_PARCELA => 'Parcela',
+        self::FORMA_LANCAMENTO_RECORRENCIA => 'Recorrencia'
+    ];
+
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -56,18 +69,23 @@ class Lancamento extends Entity
      * @var array
      */
     protected $_accessible = [
-        'data' => true,
-        'data_pagamento' => true,
-        'descricao' => true,
-        'valor' => true,
-        'natureza' => true,
-        'created' => true,
-        'modified' => true,
-        'conta_id' => true,
+        'data'               => true,
+        'data_pagamento'     => true,
+        'descricao'          => true,
+        'valor'              => true,
+        'natureza'           => true,
+        'created'            => true,
+        'modified'           => true,
+        'conta_id'           => true,
         'tipo_lancamento_id' => true,
-        'user_id' => true,
-        'conta' => true,
-        'tipo_lancamento' => true,
-        'user' => true,
+        'user_id'            => true,
+        'conta'              => true,
+        'tipo_lancamento'    => true,
+        'user'               => true,
+        'numero_parcelas'    => true,
+        'forma_lancamento'   => true,
+        'lancamento_id'      => true,
+        'lancamentos'        => true,
+        'parcela'            => true,
     ];
 }

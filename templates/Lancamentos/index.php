@@ -190,7 +190,8 @@ $this->assign(
                     <span class="time"><i class="fas fa-clock"></i> <?= $lancamento->created->format('d/m/Y h:m:s') ?></span>
                     <h3 class="timeline-header">
                       <?= $lancamento->has('tipo_lancamento') ? h($lancamento->tipo_lancamento->nome) : 'N/D' ?>
-                      <small> <?= h($lancamento->natureza) ?> </small>
+                      <small> <b><?= h($lancamento->natureza) ?></b> </small> -
+                      <?= $lancamento->parcela ?> / <?= $lancamento->numero_parcelas ?>
                     </h3>
                     <div class="timeline-body">
                       <div class="row">

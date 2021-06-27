@@ -32,7 +32,6 @@ class UsersController extends AppController
         if (!empty($usuarioLogado) && $usuarioLogado->role != 'admin' && $action != 'logout') {
             return $this->redirect(['controller' => 'Lancamentos', 'action' => 'index']);
         }
-        // dd($usuarioLogado);
     }
 
     public function login()

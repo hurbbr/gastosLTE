@@ -18,7 +18,8 @@ $this->assign('title', __('Login'));
 
   <div class="card-footer d-flex">
     <div class="ml-auto">
-      <?= $this->Html->link('Cadastrar', ['action' => 'add'], ['class' => 'btn btn-success']); ?>
+      <?php //$this->Html->link('Cadastrar', ['action' => 'add'], ['class' => 'btn btn-success']); 
+      ?>
       <?= $this->Form->button(__('Login')) ?>
     </div>
   </div>
