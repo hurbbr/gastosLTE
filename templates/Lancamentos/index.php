@@ -187,7 +187,7 @@ $this->assign(
                 <div>
                   <i class="fas <?= $lancamento::CLASS_ICONS[$lancamento->natureza] ?>"></i>
                   <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> <?= $lancamento->created->format('d/m/Y h:m:s') ?></span>
+                    <span class="time"><i class="fas fa-clock"></i> <?= h($lancamento->created) ?></span>
                     <h3 class="timeline-header">
                       <?= $lancamento->has('tipo_lancamento') ? h($lancamento->tipo_lancamento->nome) : 'N/D' ?>
                       <small> <b><?= h($lancamento->natureza) ?></b> </small> -
